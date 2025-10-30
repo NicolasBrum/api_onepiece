@@ -28,6 +28,7 @@ Cada pirata deve possuir:
 - ➕ Criar um novo pirata
 - ✏️ Atualizar informações de um pirata
 - 🔍 Buscar pirata por ID
+- 🔍 Buscar piratas por raça
 - 📜 Listar todos os piratas
 - ❌ Apagar registro de um pirata
 
@@ -65,6 +66,8 @@ Cada missão possui:
 - 🚫 Nenhum pirata pode ser cadastrado sem todos os dados necessários.
 - 🔗 Cada missão pertence a apenas um pirata.
 - 📦 Ao consultar um pirata, deve ser exibida a lista de todas as missões associadas a ele.
+- 🚫 Tratar campos em branco ou valores que nao pertencem a outros valores definidos.
+- 🚫 Excecoes nao sao bem vindas nesses mares, trate-as!.
 
 ## 💥 Técnicas do Novo Mundo (Tecnologias Avaliadas)
 
