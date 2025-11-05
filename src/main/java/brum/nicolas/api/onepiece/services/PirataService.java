@@ -4,6 +4,8 @@ package brum.nicolas.api.onepiece.services;
 import brum.nicolas.api.onepiece.dtos.PirataCreationDto;
 import brum.nicolas.api.onepiece.dtos.PirataResponseDto;
 import brum.nicolas.api.onepiece.entities.Pirata;
+import brum.nicolas.api.onepiece.entities.exceptions.PirataNotFoundException;
+import brum.nicolas.api.onepiece.entities.exceptions.RacaNotFoundException;
 import brum.nicolas.api.onepiece.mappers.PirataMapper;
 import brum.nicolas.api.onepiece.repositories.PirataRepository;
 import lombok.RequiredArgsConstructor;
@@ -36,8 +38,12 @@ public class PirataService {
 
     @Transactional(readOnly = true)
     public Pirata findPirataEntityById(Long id) {
-        return pirataRepository.findById(id)
-                .orElseThrow(RuntimeException::new);
+        try{
+            return pirataRepository.findById(id)
+                    .orElseThrow();
+        }catch(Exception ex){
+            throw new PirataNotFoundException("Pirata nao encontrado!");
+        }
     }
 
     @Transactional(readOnly = true)
@@ -57,5 +63,15 @@ public class PirataService {
     @Transactional
     public void deletePirata(Long id) {
         pirataRepository.deleteById(id);
+    }
+
+    @Transactional
+    public List<PirataResponseDto> findPiratasByRaca(Pirata.Raca raca) {
+        var piratasDto = pirataRepository.findAllByRaca(raca)
+                .orElseThrow(() -> new RacaNotFoundException("Raca nao encontrada!"));
+
+        return piratasDto.stream()
+                .map(pirataMapper::toResponseDto)
+                .collect(Collectors.toList());
     }
 }
